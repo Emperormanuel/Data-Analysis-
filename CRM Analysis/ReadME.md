@@ -14,7 +14,7 @@ Sales team fields (manager, regional_office) joined to Sales Team table (opportu
 ); 7 products.
 
 #### Insights:  
-Q4 had highest win volume, Q1 highest win rate althought the data begun from the March so it should be considered carefully;  
+Q4 had highest win volume, Q1 highest win rate although the data begun from March so it should be considered carefully;  
 Q4 2017: 1,196 won (-4.9% QoQ), 60:40 win/loss; top agent Darcel Schlecht.
 
 #### Recommendations:  
