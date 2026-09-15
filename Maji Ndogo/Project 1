@@ -1,0 +1,69 @@
+# Maji Ndogo Water Services: Exploratory Data Analysis (Part 1)
+
+**From analysis to action — exploring a 60,000-record water services database to understand the scope of the water crisis in Maji Ndogo.**
+
+## Background Overview
+
+Maji Ndogo is a fictional country facing a widespread water access crisis. Following an extensive survey effort involving engineers, field workers, scientists, and analysts, the government compiled a database of over 60,000 records covering water source types, citizen visit patterns, water quality scores, and pollution test results across the country.
+
+Leadership's mandate was simple but high-stakes: **make sense of this data, extract meaningful insight, and use it to guide where investment and intervention are needed most.**
+
+**Objectives:**
+
+- Identify all the unique types of water sources in use across Maji Ndogo
+- Analyze visit and queue-time patterns at shared water points
+- Assess the quality of water sources
+- Investigate pollution issues
+
+## Executive Summary
+
+An analysis of 60,000+ water service records across Maji Ndogo reveals a crisis concentrated at a small number of high-traffic access points, not spread evenly across the network. Shared taps serving the largest populations have the longest queues — up to 8+ hours in the worst cases — making them the highest-priority targets for new infrastructure investment. Data quality issues compound the problem: audits uncovered 218 mislabeled "perfect quality" readings and 38 well-pollution records wrongly marked "Clean" despite confirmed contamination, meaning some unsafe sources may currently look safe on paper. Fixing the classification logic behind these records is a low-cost, high-impact fix that should happen before any investment decisions are finalized on the existing data.
+
+## Data Structure and Overview
+
+The dataset is a simulated water services database (`md_water_services`) built for the ALX Data Analytics program, containing the following tables:
+
+| Table | Description |
+|---|---|
+| `data_dictionary` | Explains each column across the database |
+| `employee` | Field surveyor and staff records |
+| `global_water_access` | Country-wide water access statistics |
+| `location` | Address, province, town, and urban/rural classification for each surveyed site |
+| `water_source` | Type of water source and number of people served |
+| `visits` | Log of each visit made to a water source, including queue time |
+| `water_quality` | Subjective quality score assigned by field surveyors |
+| `well_pollution` | Pollution test results for well sources (biological and chemical contamination) |
+
+
+
+## Insights Deep Dive
+
+- Maji Ndogo relies on five distinct water source types, with river water — the highest contamination risk — still in active use.
+- Shared taps serving thousands of people are associated with the longest queue times, in some cases exceeding 8 hours.
+- Data integrity checks surfaced 218 potentially mislogged "perfect quality" records requiring independent field audit.
+- 38 well pollution records were misclassified as "Clean" due to a description-field parsing error, despite confirmed biological contamination — a correction with direct public health relevance.
+
+### Example: Flagging the longest queue times
+
+To put the 8-hour queue-time finding into perspective, records with a queue time over 500 minutes (~8.3 hours) can be pulled directly from the `visits` table:
+
+```sql
+SELECT *
+FROM visits
+WHERE time_in_queue > 500;
+```
+
+Waiting over 8 hours to collect water is longer than a full workday — this query surfaces exactly which shared taps are creating that burden.
+
+## Recommendations
+
+- Prioritize infrastructure investment at shared taps with the longest recorded queue times, as these represent the highest-burden access points per capita.
+- Establish an independent auditing process for field-recorded quality scores to catch data entry inconsistencies before they reach reporting.
+- Standardize pollution test result classification to be derived directly from measured values (not free-text descriptions) to prevent future misclassification of contaminated sources as safe.
+
+## Tools & Skills Used
+
+- **SQL (MySQL)** — `SELECT`, `WHERE`, `LIKE`, string pattern matching, `UPDATE`, `CREATE TABLE ... AS`, `DROP TABLE`
+- Relational database exploration (primary/foreign key relationships)
+- Data quality auditing and correction
+- Documentation of query logic via inline comments
